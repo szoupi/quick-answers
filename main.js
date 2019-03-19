@@ -8,6 +8,9 @@ var categories = [
 	'Πρωτεύουσες', 
 	'Λουλούδια', 
 	'Επαγγέλματα', 
+	'Ομάδες', 
+	'Θηλαστικά', 
+	'Νομίσματα', 
 ]
 
 
@@ -21,7 +24,6 @@ var start_timer = function(){
 	
 	// if timer is running, stop it
 	clearInterval(g_timer)
-	
 	
 	// Start and update the count down every 1 second
 	g_timer = setInterval(function () {
@@ -49,29 +51,28 @@ var start_timer = function(){
 
 // start the timer
 timer_button.addEventListener('click', function() {
+	
 	// select a random category
-	var random_category = categories[Math.floor(Math.random() * categories.length)]
-	document.getElementById('category').innerHTML = random_category
+	var random_num = Math.floor(Math.random() * categories.length)
 	
 	// remove the category from the array 
 	// so as not to be used again in the same round
-	categories.splice(random_category, 1) 
-	// console.log(categories)	
-	// console.log(random_category)
+	var removed = categories.splice(random_num, 1) 
+	document.getElementById('category').innerHTML = removed
+	// console.log('random num', random_num)	
+	// console.log('categories ', categories)
+	// console.log('removed ', removed)
 
 	// reset letters status
-	initialize_letters()	
-	
+	initialize_letters()
+
 	// start the timer
 	start_timer()
 })
 
 var initialize_letters = function(){
-	var disabled_letters = document.getElementsByClassName('disabled')	
-	for (var i = 0; i < disabled_letters.length; i++) {
-		disabled_letters[i].classList.remove('disabled')
-		console.log(disabled_letters[i])
-
+	for (var i = 0; i < letters.length; i++) {
+		letters[i].classList.remove('disabled')
 	}
 }
 

@@ -1,16 +1,39 @@
 var letters = document.getElementsByClassName('grid-item')
 var timer = document.getElementById('timer')
+var timer_seconds = 13 // seconds available for each player turn
 var timer_button = document.getElementById('timer_button')
 var g_timer = null //global timer
+var explosion_dot = document.getElementById('explosion-dot')
 
 var categories = [
 	'Χώρες', 
 	'Πρωτεύουσες', 
 	'Λουλούδια', 
 	'Επαγγέλματα', 
-	'Ομάδες', 
+	'Ελληνικές Ομάδες', 
+	'Ξένες Ομάδες', 
 	'Θηλαστικά', 
 	'Νομίσματα', 
+	'Επώνυμα από το έργο', 
+	'Ανδρικά ονόματα', 
+	'Γυναικεία Ονόματα', 
+	'Ελληνικές πόλεις', 
+	'Υλικά ΚΣ', 
+	'Έλληνες Ποδοσφαιριστές', 
+	'Ξένοι Ποδοσφαιριστές', 
+	'Έλληνες μπασκετμπολίστες', 
+	'Ξένοι μπασκετμπολίστες', 
+	'Τενίστες/στριες', 
+	'Τίτλοι βιβλίων', 
+	'Τραγούδια ΚΣ', 
+	'Είδη ψαριών', 
+	'Φαγητά', 
+	'Βουνά', 
+	'Ιστορικές προσωπικότητες', 
+	'Ήρωες Καρτούν', 
+	'Εργαλεία', 
+	'Εφευρέσεις', 
+	'Ποτάμια', 
 ]
 
 
@@ -19,12 +42,32 @@ var start_timer = function(){
 	
 	// Set the date we're counting down to
 	var start = new Date();
-	start.setSeconds(start.getSeconds() + 11);
+	start.setSeconds(start.getSeconds() + timer_seconds);
 	
 	
 	// if timer is running, stop it
 	clearInterval(g_timer)
+
+	// (re)start the explosion effect
+	explosion_dot.classList.remove('effect-explosion')
+	void explosion_dot.offsetWidth
+
 	
+	// (re)start the color effect
+	timer_button.classList.remove('effect-change-color')
+	// https://css-tricks.com/restart-css-animation/
+	// -> triggering reflow /* The actual magic */ to restart the effect
+	// without this it wouldn't work. Try uncommenting the line and the transition won't be retriggered.
+	// Oops! This won't work in strict mode. Thanks Felis Phasma!
+	// element.offsetWidth = element.offsetWidth;
+	// Do this instead:
+	void timer_button.offsetWidth
+	timer_button.classList.add('effect-change-color')
+	timer_button.style.animationDuration = timer_seconds + 's'
+	
+
+
+
 	// Start and update the count down every 1 second
 	g_timer = setInterval(function () {
 		
@@ -39,15 +82,22 @@ var start_timer = function(){
 		
 		// Display the result
 		timer_button.innerHTML = seconds
-		
+
 		// If the count down is finished, write some text 
 		if (distance < 0) {
 			clearInterval(g_timer);
-			timer_button.innerHTML = 'KABOOM!';
+			timer_button.innerHTML = 'ΈΧΑΣΕΣ! :(';
+			timer_button.style.backgroundColor = 'red'
+			// timer_button.classList.add('effect-explosion')
+			explosion_dot.classList.add('effect-explosion')
+
 		}
 	}, 1000);
 	
 }
+
+
+
 
 // start the timer
 timer_button.addEventListener('click', function() {

@@ -1,5 +1,6 @@
 body {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+
 }
 
 .grid-container {
@@ -35,9 +36,50 @@ body {
   text-decoration: none;
   display: inline-block;
   font-size: 2rem;
-  min-width: 10rem;
-  margin: 0.5rem;
+  width: 100%;
+  max-width: 800px;
+  margin: 0.5rem auto;
+}
 
+.effect-change-color {
+  animation-name: color-change;
+  animation-timing-function: linear; 
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-fill-mode: none;
+  animation-play-state: running;
+}
+
+@keyframes color-change {
+  0% {
+    /* transform: scale(1); */
+    background-color: green;
+  }
+  40% {
+    background-color: orange;
+  }
+  100% {
+    /* transform: scale(3.5); */
+    background-color: red;
+  }
+}
+
+.effect-explosion {
+  animation-name: explosion;
+  animation-duration: 2s; 
+  animation-timing-function: ease-out;
+}
+
+@keyframes explosion {
+  0% {
+    /* transform: scale(1); */
+    box-shadow: 0 0 0 30px rgba(255, 1, 1, .2)
+  }
+ 
+  100% {
+    /* transform: scale(3.5); */
+    box-shadow: 0 0 0 1920px rgb(0, 0, 0, 0.9)
+  }
 }
 
 #category {
@@ -46,4 +88,17 @@ body {
   background: darkblue;
   color: white;
   padding: .5rem;
+  max-width: 800px;
+}
+
+.explosion-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1px;
+  height: 1px;
+  background: rgba(176, 255, 95, 1);
+  border-radius: 50%;
+
 }
